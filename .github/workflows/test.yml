@@ -29,6 +29,7 @@ jobs:
             llvm-15 \
             llvm-15-dev \
             llvm-15-linker-tools \
+            llvm-15-runtime \
             llvm-15-tools
 
       - name: Install Rust
