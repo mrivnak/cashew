@@ -1,6 +1,6 @@
 # cashew
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/mrivnak/cashew/check.yml)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/mrivnak/cashew/build.yml)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/mrivnak/cashew/test.yml?label=tests)
 
 ![Rust](https://img.shields.io/badge/rust-%23f74c00.svg?style=for-the-badge&logo=rust&logoColor=white)
