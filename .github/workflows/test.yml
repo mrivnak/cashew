@@ -21,6 +21,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            build-essential \
+            llvm-15 \
+            llvm-15-dev \
+            llvm-15-linker-tools \
+            llvm-15-tools
+
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -28,7 +38,7 @@ jobs:
           override: true
           components: clippy
       
-      - name: Install tarpaulin
+      - name: Install Tarpaulin
         run: cargo install cargo-tarpaulin
 
       - name: Run tests
