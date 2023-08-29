@@ -1,0 +1,3 @@
+[workspace]
+members = ["libcashew", "cashewc"]
+resolver = "2"
