@@ -10,9 +10,6 @@ on:
       - opened
       - synchronize
 
-env:
-  RUST_BACKTRACE: 1
-
 jobs:
   build:
     name: Build
@@ -21,20 +18,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y \
-            build-essential \
-            llvm-15 \
-            llvm-15-dev \
-            libclang-common-15-dev
+      - name: Install Nix
+        uses: cachix/install-nix-action@v22
 
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
+      - name: Set up Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@v2
 
       - name: Build
-        run: cargo build
+        run: |
+          nix-shell --run "mkdir build && cd build && cmake .. && cmake --build ."
