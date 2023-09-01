@@ -1,4 +1,4 @@
-name: Build Action
+name: Test Action
 
 on:
   push:
@@ -11,8 +11,8 @@ on:
       - synchronize
 
 jobs:
-  build:
-    name: Build
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,4 +26,4 @@ jobs:
 
       - name: Build
         run: |
-          nix-shell --run "mkdir build && cd build && cmake .. && make"
+          nix-shell --run "mkdir build && cd build && cmake .. && make && make test"
