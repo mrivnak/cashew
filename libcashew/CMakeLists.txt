@@ -2,6 +2,7 @@ add_library(libcashew STATIC
     src/cashew.cpp
     # List all your source files here
 )
+set_target_properties(libcashew PROPERTIES PREFIX "")
 
 find_package(LLVM REQUIRED CONFIG)
 
