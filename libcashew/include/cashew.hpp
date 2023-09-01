@@ -1,3 +1,7 @@
 #pragma once
 
-void hello();
+#include <string>
+
+std::string hello();
+
+int get_42();

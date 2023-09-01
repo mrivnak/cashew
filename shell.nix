@@ -3,6 +3,8 @@
 pkgs.llvmPackages_15.stdenv.mkDerivation {
   name = "cashew-nix-shell";
   buildInputs = with pkgs; [
+    catch2_3
+    clang_15
     cmake
     cxxopts
     libffi

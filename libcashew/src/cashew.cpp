@@ -1,5 +1,12 @@
-#include <iostream>
+#include <string>
+#include "cashew.hpp"
 
-void hello() {
-    std::cout << "Hello, Cashew!" << std::endl;
+std::string hello()
+{
+    return "Cashew";
+}
+
+int get_42()
+{
+    return 42;
 }
