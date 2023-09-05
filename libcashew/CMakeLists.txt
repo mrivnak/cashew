@@ -1,8 +1,7 @@
-add_library(libcashew STATIC
+add_library(cashew STATIC
     src/cashew.cpp
     # List all your source files here
 )
-set_target_properties(libcashew PROPERTIES PREFIX "")
 
 find_package(LLVM REQUIRED CONFIG)
 
@@ -17,7 +16,7 @@ message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 include_directories(${LLVM_INCLUDE_DIRS})
 add_definitions(${LLVM_DEFINITIONS})
 
-target_include_directories(libcashew PUBLIC
+target_include_directories(cashew PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
@@ -26,4 +25,4 @@ target_include_directories(libcashew PUBLIC
 llvm_map_components_to_libnames(llvm_libs support core irreader)
 
 # Link against LLVM libraries
-target_link_libraries(libcashew ${llvm_libs})
+target_link_libraries(cashew ${llvm_libs})

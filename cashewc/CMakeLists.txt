@@ -8,6 +8,6 @@ target_include_directories(cashewc PRIVATE
 )
 
 target_link_libraries(cashewc PRIVATE
-    libcashew
+    cashew
     # list other dependencies if needed
 )
