@@ -24,6 +24,6 @@ jobs:
       - name: Set up Nix cache
         uses: DeterminateSystems/magic-nix-cache-action@v2
 
-      - name: Build
+      - name: Run tests
         run: |
           nix-shell --run "mkdir build && cd build && cmake .. && make && make test"
