@@ -26,4 +26,4 @@ jobs:
 
       - name: Build
         run: |
-          nix-shell --run "mkdir build && cd build && cmake .. && make"
+          nix-shell --run "mkdir build && cd build && cmake .. && ninja"

@@ -21,4 +21,5 @@ build/
 .envrc
 
 ### VSCode ###
+.vscode/
 *.code-workspace

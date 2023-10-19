@@ -10,7 +10,11 @@ pkgs.llvmPackages_15.stdenv.mkDerivation {
     libffi
     libxml2
     llvmPackages_15.libllvm
+    ninja
     sphinx
   ];
+  shellHook = ''
+    export CMAKE_GENERATOR=Ninja
+  '';
 }
 

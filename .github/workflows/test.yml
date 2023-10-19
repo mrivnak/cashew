@@ -26,4 +26,4 @@ jobs:
 
       - name: Run tests
         run: |
-          nix-shell --run "mkdir build && cd build && cmake .. && make && make test"
+          nix-shell --run "mkdir build && cd build && cmake .. && ninja && ninja test"
