@@ -67,3 +67,17 @@ TEST_CASE("tokenize (comment_0.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
         REQUIRE(tokens[i].value == expected[i]);
 }
+
+TEST_CASE("tokenize (comment_1.nut)", "[token]")
+{
+    std::ifstream input("../tests/libcashew-parser/examples/comment_1.nut");
+    std::stringstream buffer;
+    buffer << input.rdbuf();
+    input.close();
+
+    std::vector<std::string> expected = {"let", "a", "=", "5", "\n"};
+    auto tokens = cashew::parser::tokenize(buffer);
+    // REQUIRE(tokens.size() == expected.size());
+    for (size_t i = 0; i < tokens.size(); ++i)
+        REQUIRE(tokens[i].value == expected[i]);
+}
