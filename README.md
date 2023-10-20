@@ -13,7 +13,7 @@ Functional, strongly-typed programming language, implemented with C++ and LLVM
 
 ### Prerequisites
 
-- LLVM 15
+- LLVM 16
 - Clang
 - CMake
 
