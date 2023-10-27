@@ -23,3 +23,6 @@ build/
 ### VSCode ###
 .vscode/
 *.code-workspace
+
+### CLion ###
+.idea/

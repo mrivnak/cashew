@@ -13,13 +13,7 @@ Functional, strongly-typed programming language, implemented with C++ and LLVM
 
 ### Prerequisites
 
-- LLVM 16
 - Clang
+- LLD
 - CMake
-
-### Using Nix
-
-![Nix](https://img.shields.io/badge/NIX-5277C3.svg?style=for-the-badge&logo=NixOS&logoColor=white)
-
-A `shell.nix` file is provided for use with Nix. To enter a shell with all the necessary dependencies, run `nix-shell` in the root of the project.
-Alternatively `nix-direnv` can be used to automatically enter the shell when entering the project directory.
+- Ninja

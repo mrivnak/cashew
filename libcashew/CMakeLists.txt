@@ -1,28 +1,34 @@
+include(FetchContent)
+set(FETCHCONTENT_QUIET FALSE)
+FetchContent_Declare(
+    llvm
+    GIT_REPOSITORY https://github.com/llvm/llvm-project.git
+    GIT_TAG        release/17.x
+    GIT_SHALLOW    TRUE
+    GIT_PROGRESS   TRUE
+)
+FetchContent_GetProperties(llvm)
+
+if (NOT llvm_POPULATED)
+    FetchContent_Populate(llvm)
+    
+    add_subdirectory(${llvm_SOURCE_DIR}/llvm ${llvm_BINARY_DIR})
+endif()
+
+include_directories(
+    ${llvm_BINARY_DIR}/include
+    ${llvm_SOURCE_DIR}/llvm/include
+)
+add_definitions(${LLVM_DEFINITIONS})
+
 add_library(cashew STATIC
     src/cashew.cpp
-    # List all your source files here
 )
-
-find_package(LLVM REQUIRED CONFIG)
-
-message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
-message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
-
-# Set your project compile flags.
-# E.g. if using the C++ header files
-# you will need to enable C++11 support
-# for your compiler.
-
-include_directories(${LLVM_INCLUDE_DIRS})
-add_definitions(${LLVM_DEFINITIONS})
 
 target_include_directories(cashew PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-# Find the libraries that correspond to the LLVM components
-# that we wish to use
 llvm_map_components_to_libnames(llvm_libs support core irreader)
 
-# Link against LLVM libraries
 target_link_libraries(cashew ${llvm_libs})
