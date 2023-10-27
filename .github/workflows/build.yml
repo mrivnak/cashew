@@ -36,4 +36,4 @@ jobs:
 
       - name: Build
         run: |
-          mkdir build && cd build && cmake .. && ninja
+          mkdir build && cd build && cmake .. -G Ninja && ninja
