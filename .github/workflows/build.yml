@@ -31,7 +31,8 @@ jobs:
           mkdir build && cd build && cmake .. -G Ninja && ninja
 
       - name: Run unit tests
-        run: build/tests --reporter JUnit --output test-results.xml
+        working-directory: build
+        run: ./tests --reporter JUnit --out ../test-results.xml
 
       - name: Upload test results
         uses: actions/upload-artifact@v3
