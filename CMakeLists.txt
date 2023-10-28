@@ -22,8 +22,8 @@ add_subdirectory(cashewc)
 # Unit tests
 FetchContent_Declare(
     Catch2
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
     URL https://github.com/catchorg/Catch2/archive/refs/tags/v3.4.0.tar.gz
-    DOWNLOAD_EXTRACT_TIMESTAMP ON
 )
 
 if (NOT Catch2_POPULATED)
