@@ -14,7 +14,9 @@ jobs:
   build:
     name: Build
     runs-on: [self-hosted, ubuntu-latest]
-    concurrency: build
+    permissions:
+      checks: write
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -24,16 +26,15 @@ jobs:
           sudo apt update
           sudo apt install -y libboost-all-dev libssl-dev libzmq3-dev
 
-      - name: Get LLVM branch hash
-        run: git ls-remote https://github.com/llvm/llvm-project.git $(cat libcashew/CMakeLists.txt | sed -n 's/ *GIT_TAG\ *\(.*\)/\1/p') > llvm_branch_hash.txt
-
-      - name: Build cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            build
-          key: ${{ runner.os }}-cmake-${{ hashFiles('llvm_branch_hash.txt') }}
-
       - name: Build
         run: |
           mkdir build && cd build && cmake .. -G Ninja && ninja
+
+      - name: Run unit tests
+        run: build/tests --reporter JUnit --output test-results.xml
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: test-results.xml
