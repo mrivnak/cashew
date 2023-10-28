@@ -2,16 +2,14 @@ include(FetchContent)
 set(FETCHCONTENT_QUIET FALSE)
 FetchContent_Declare(
     llvm
-    GIT_REPOSITORY https://github.com/llvm/llvm-project.git
-    GIT_TAG        release/17.x
-    GIT_SHALLOW    TRUE
-    GIT_PROGRESS   TRUE
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+    URL https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-17.0.3.tar.gz
 )
 FetchContent_GetProperties(llvm)
 
 if (NOT llvm_POPULATED)
     FetchContent_Populate(llvm)
-    
+
     add_subdirectory(${llvm_SOURCE_DIR}/llvm ${llvm_BINARY_DIR})
 endif()
 
@@ -29,6 +27,11 @@ target_include_directories(cashew PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-llvm_map_components_to_libnames(llvm_libs support core irreader)
+llvm_map_components_to_libnames(LLVM_LIBS support core irreader)
 
-target_link_libraries(cashew ${llvm_libs})
+# Ignore warnings for LLVM
+foreach(LLVM_LIB IN ITEMS ${LLVM_LIBS})
+    target_compile_options(${LLVM_LIB} PUBLIC -Wno-everything)
+endforeach()
+
+target_link_libraries(cashew ${LLVM_LIBS})
