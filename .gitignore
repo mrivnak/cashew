@@ -25,4 +25,4 @@ build/
 *.code-workspace
 
 ### CLion ###
-.idea/
+#.idea/
