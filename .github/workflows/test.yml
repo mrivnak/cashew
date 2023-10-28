@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install build-essential clang lld cmake ninja-build libboost-all-dev libssl-dev libzmq3-dev
+          sudo apt install -y libboost-all-dev libssl-dev libzmq3-dev
 
       - name: Get LLVM branch hash
         run: git ls-remote https://github.com/llvm/llvm-project.git $(cat libcashew/CMakeLists.txt | sed -n 's/ *GIT_TAG\ *\(.*\)/\1/p') > llvm_branch_hash.txt
