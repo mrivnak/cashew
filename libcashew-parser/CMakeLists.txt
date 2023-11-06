@@ -1,5 +1,5 @@
 add_library(cashew-parser STATIC
-    src/cashew_parser.cpp
+        src/lexer.cpp
 )
 
 target_include_directories(cashew-parser PUBLIC

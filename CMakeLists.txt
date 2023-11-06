@@ -32,10 +32,12 @@ if (NOT Catch2_POPULATED)
 endif ()
 
 add_executable(tests
-        tests/libcashew-parser/lexer.cpp
+        tests/src/util.cpp
+        tests/src/libcashew-parser/lexer.cpp
+        tests/src/libcashew-parser/lexer_invalid.cpp
 )
 target_include_directories(tests PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        tests/include
 )
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain cashew cashew-parser)
 
