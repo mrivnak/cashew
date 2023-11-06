@@ -6,7 +6,7 @@ using namespace cashew::parser;
 
 TEST_CASE("tokenize_invalid (missing_closing_quote.nut)", "[token][invalid]")
 {
-    auto input = readFileToStream("../tests/examples/invalid/missing_closing_quote.nut");
+    auto input = readFileToStream("../tests/examples/parser/invalid/missing_closing_quote.nut");
 
     REQUIRE_THROWS_AS(tokenize(input), InvalidTokenException);
 }

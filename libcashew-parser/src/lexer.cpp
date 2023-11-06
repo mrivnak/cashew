@@ -83,37 +83,50 @@ std::vector<Token> tokenize(std::istream &input)
     {
         if (inComment)
         {
+            // end comment on newline
             if (character == '\n')
             {
                 inComment = false;
                 tokens.emplace_back(TokenType::TOKEN_NEWLINE);
             }
-            continue;
+            continue; // ignore all other characters in comment
         }
         switch (character)
         {
         case '\n':
-            if (inString)
+            if (inString) // error if newline before closing quote
             {
                 throw InvalidTokenException("Missing closing quote.");
             }
-            else
-            {
-                if (!token.str().empty())
-                {
-                    tokens.push_back(resolveToken(token.str()));
-                    token.str("");
-                }
 
-                tokens.emplace_back(TokenType::TOKEN_NEWLINE);
+            // add the token
+            if (!token.str().empty())
+            {
+                tokens.push_back(resolveToken(token.str()));
+                token.str("");
             }
+
+            // also add a newline token
+            tokens.emplace_back(TokenType::TOKEN_NEWLINE);
 
             break;
         case '"':
+            // ignore escaped quotes
             if (prevCharacter != '\\')
             {
                 inString = !inString;
             }
+
+            // add the quote to the token
+            token << character;
+
+            // if string is closed, add the token
+            if (!inString)
+            {
+                tokens.push_back(resolveToken(token.str()));
+                token.str("");
+            }
+
             break;
         case '/':
             if (prevCharacter == '/')
@@ -123,7 +136,11 @@ std::vector<Token> tokenize(std::istream &input)
             break;
         case ' ':
         case '\t':
-            if (!inString)
+            if (inString) // include whitespace in string literals
+            {
+                token << character;
+            }
+            else // otherwise, add the token
             {
                 if (!token.str().empty())
                 {
