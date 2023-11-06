@@ -23,12 +23,6 @@ jobs:
           sudo apt update
           sudo apt install -y libboost-all-dev libssl-dev libzmq3-dev
 
-      - name: Build cache
-        uses: actions/cache@v3
-        with:
-          path: build
-          key: ${{ runner.os }}-cmake-debug
-
       - name: Create build directory
         run: mkdir build
 
