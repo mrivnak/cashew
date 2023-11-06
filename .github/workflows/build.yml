@@ -23,9 +23,14 @@ jobs:
           sudo apt update
           sudo apt install -y libboost-all-dev libssl-dev libzmq3-dev
 
+      - name: Create build directory
+        run: mkdir build
+
       - name: Build
+        working-directory: build
         run: |
-          mkdir build && cd build && cmake .. -G Ninja && ninja
+          cmake .. -G Ninja -DTARGETS_TO_BUILD="X86"
+          ninja
 
       - name: Run unit tests
         working-directory: build
