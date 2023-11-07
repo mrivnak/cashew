@@ -19,6 +19,12 @@ add_subdirectory(libcashew-parser)
 add_subdirectory(libcashew)
 add_subdirectory(cashewc)
 
+# Documentation
+if (BUILD_DOCS)
+    message(STATUS "Building documentation")
+    add_subdirectory(docs)
+endif ()
+
 # Unit tests
 FetchContent_Declare(
         Catch2

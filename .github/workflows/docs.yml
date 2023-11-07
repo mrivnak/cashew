@@ -1,0 +1,35 @@
+name: Build Documentation Action
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y libboost-all-dev libssl-dev libzmq3-dev sphinx-doc
+
+      - name: Create build directory
+        run: mkdir build
+
+      - name: Build
+        working-directory: build
+        run: |
+          cmake .. -G Ninja -DBUILD_DOCS=Yes
+          ninja docs
+
+      # TODO: Upload docs to GitHub Pages (only for the default branch)
