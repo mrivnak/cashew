@@ -21,7 +21,8 @@ jobs:
       - name: Install LLVM Repo
         run: |
           wget https://apt.llvm.org/llvm.sh
-          sh llvm.sh 17
+          chmod +x llvm.sh
+          sudo ./llvm.sh 17
 
       - name: Install dependencies
         run: |
