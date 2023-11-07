@@ -21,13 +21,16 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y libboost-all-dev libssl-dev libzmq3-dev sphinx-doc
+          sudo apt install -y clang cmake ninja-build libboost-all-dev libssl-dev libzmq3-dev sphinx-doc
 
       - name: Create build directory
         run: mkdir build
 
       - name: Build
         working-directory: build
+        env:
+            CC: clang
+            CXX: clang++
         run: |
           cmake .. -G Ninja -DBUILD_DOCS=Yes
           ninja docs
