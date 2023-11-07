@@ -18,10 +18,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Install LLVM Repo
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          sh llvm.sh 17
+
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y libboost-all-dev libssl-dev libzmq3-dev
+          sudo apt install -y clang-17 libboost-all-dev libssl-dev libzmq3-dev
 
       - name: Create build directory
         run: mkdir build
@@ -29,8 +34,8 @@ jobs:
       - name: Build
         working-directory: build
         env:
-          CC: clang
-          CXX: clang++
+          CC: clang-17
+          CXX: clang++-17
         run: |
           cmake .. -G Ninja -DTARGETS_TO_BUILD="X86"
           ninja
