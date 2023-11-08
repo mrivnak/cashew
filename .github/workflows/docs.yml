@@ -35,10 +35,38 @@ jobs:
       - name: Build
         working-directory: build
         env:
-            CC: clang-17
-            CXX: clang++-17
+          CC: clang-17
+          CXX: clang++-17
         run: |
           cmake .. -G Ninja -DBUILD_DOCS=Yes
           ninja docs
+      - name: Fix permissions
+        run: |
+          chmod -c -R +rX "_site/" | while read line; do
+          echo "::warning title=Invalid file permissions automatically fixed::$line"
+          done
 
-      # TODO: Upload docs to GitHub Pages (only for the default branch)
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: build/docs/dist/html
+  
+
+  deploy:
+    name: Deploy
+    needs: build
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
