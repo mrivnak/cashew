@@ -1,20 +1,25 @@
+/*
+ * @file libcashew_parser/exceptions.hpp
+ */
 #pragma once
 
 #include <string>
 
-///
-/// An exception thrown when a token is invalid
-///
+namespace cashew::parser
+{
+/*
+ * @brief An exception thrown when a token is invalid
+ */
 class InvalidTokenException : public std::exception
 {
   private:
     std::string message;
 
   public:
-    ///
-    /// \brief Construct a new Invalid Token Exception object
-    /// \param message The message to display
-    ///
+    /*
+     * @brief Construct a new Invalid Token Exception object
+     * @param message The message to display
+     */
     explicit InvalidTokenException(std::string message) : message(std::move(message))
     {
     }
@@ -24,3 +29,4 @@ class InvalidTokenException : public std::exception
         return message.c_str();
     }
 };
+} // namespace cashew::parser
