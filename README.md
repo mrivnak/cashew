@@ -18,3 +18,27 @@ Functional, strongly-typed programming language, implemented with C++ and LLVM
 - CMake
 - Ninja
 - Sphinx (for documentation)
+
+### Building
+
+```bash
+mkdir build && cd build
+
+cmake \
+  -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DTARGETS_TO_BUILD="X86;Aarch64;RISCV" \
+  ..
+  
+ninja
+```
+
+#### Documentation
+
+This builds sphinx docs to `build/docs/dist/html`
+
+```bash
+mkdir build && cd build
+cmake -G Ninja .. -DBUILD_DOCS=YES
+ninja docs
+```
