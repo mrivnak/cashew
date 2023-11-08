@@ -1,12 +1,13 @@
 #pragma once
 
 #include <string>
-#include <utility>
-#include <variant>
 #include <vector>
 
 namespace cashew::parser
 {
+///
+/// Types of tokens
+///
 enum TokenType
 {
     // Containers
@@ -80,10 +81,9 @@ enum TokenType
     TOKEN_UNKNOWN,
 };
 
-typedef std::variant<std::string, u_int8_t, u_int16_t, u_int32_t, u_int64_t, int8_t, int16_t, int32_t, ino64_t, float,
-                     double, bool>
-    literal;
-
+///
+/// A token, containing a type and a value. The value is only used for literals and identifiers.
+///
 struct Token
 {
     TokenType type;
@@ -91,21 +91,4 @@ struct Token
 };
 
 std::vector<Token> tokenize(std::istream &input);
-
-class InvalidTokenException : public std::exception
-{
-  private:
-    std::string message;
-
-  public:
-    explicit InvalidTokenException(std::string message) : message(std::move(message))
-    {
-    }
-
-    [[nodiscard]] const char *what() const noexcept override
-    {
-        return message.c_str();
-    }
-};
-
 } // namespace cashew::parser

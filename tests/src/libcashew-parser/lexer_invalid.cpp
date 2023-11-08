@@ -1,5 +1,7 @@
-#include "catch2/catch_test_macros.hpp"
-#include "libcashew/lexer.hpp"
+#include <catch2/catch_test_macros.hpp>
+#include <libcashew_parser/exceptions.hpp>
+#include <libcashew_parser/lexer.hpp>
+
 #include "util.hpp"
 
 using namespace cashew::parser;

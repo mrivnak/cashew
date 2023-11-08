@@ -1,7 +1,8 @@
-#include "libcashew/lexer.hpp"
-
 #include <regex>
 #include <sstream>
+
+#include "libcashew_parser/exceptions.hpp"
+#include "libcashew_parser/lexer.hpp"
 
 const std::regex IDENTIFIER_REGEX = std::regex("^[a-zA-Z_][a-zA-Z0-9_]*$");
 const std::regex INTEGER_LITERAL_REGEX = std::regex("^[0-9_]+(?:u8|u16|u32|u64|i8|i16|i32|i64)?$");
