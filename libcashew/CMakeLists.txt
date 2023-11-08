@@ -51,4 +51,9 @@ foreach (LLVM_LIB IN ITEMS ${LLVM_LIBS})
     target_compile_options(${LLVM_LIB} PUBLIC -Wno-everything)
 endforeach ()
 
+# Enable clang warnings for documentation
+if (BUILD_DOCS AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_compile_options(cashew PRIVATE -Wdocumentation)
+endif ()
+
 target_link_libraries(cashew ${LLVM_LIBS})

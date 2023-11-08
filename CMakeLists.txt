@@ -21,7 +21,7 @@ add_subdirectory(cashewc)
 
 # Documentation
 if (BUILD_DOCS)
-    message(STATUS "Building documentation")
+    message(STATUS "Enabling documentation")
     add_subdirectory(docs)
 endif ()
 

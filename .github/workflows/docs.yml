@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y clang-17 cmake ninja-build libboost-all-dev libssl-dev libzmq3-dev sphinx-doc python3-sphinx
+          sudo apt install -y clang-17 cmake ninja-build libboost-all-dev libssl-dev libzmq3-dev doxygen
 
       - name: Create build directory
         run: mkdir build
