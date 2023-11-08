@@ -1,7 +1,6 @@
-/*
- * @file libcashew_parser/exceptions.hpp
+/*!
+ * @file libcashew_parser/lexer.hpp
  */
-
 #pragma once
 
 #include <string>
@@ -9,7 +8,8 @@
 
 namespace cashew::parser
 {
-/*
+/*!
+ * @enum TokenType
  * @brief Types of tokens
  */
 enum TokenType
@@ -85,10 +85,11 @@ enum TokenType
     TOKEN_UNKNOWN,
 };
 
-/*
- * @brief Token struct
- *
- * A token, containing a type and a value. The value is only used for literals and identifiers.
+/*!
+ * @struct Token
+ * @brief Token structure
+ * @var Token::type The type of token
+ * @var Token::value The value of the token, if applicable
  */
 struct Token
 {
@@ -96,8 +97,11 @@ struct Token
     std::string value;
 };
 
-/*
- * @brief Tokenize source code
+/*!
+ * @fn std::vector<Token> tokenize(std::istream &input)
+ * @brief Tokenize a string
+ * @param input Input stream
+ * @return Vector of tokens
  */
 std::vector<Token> tokenize(std::istream &input);
 } // namespace cashew::parser
