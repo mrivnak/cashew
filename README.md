@@ -17,7 +17,7 @@ Functional, strongly-typed programming language, implemented with C++ and LLVM
 - LLD
 - CMake
 - Ninja
-- Sphinx (for documentation)
+- Doxygen (for documentation)
 
 ### Building
 
