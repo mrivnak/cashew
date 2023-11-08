@@ -1,11 +1,15 @@
 /*!
- * @file libcashew_parser/lexer.hpp
+ * @file lexer.hpp
  */
 #pragma once
 
 #include <string>
 #include <vector>
 
+/*!
+ * @namespace cashew::parser
+ * @brief The Cashew parser namespace
+ */
 namespace cashew::parser
 {
 /*!
