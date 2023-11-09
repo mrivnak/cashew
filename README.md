@@ -35,7 +35,7 @@ ninja
 
 #### Documentation
 
-This builds sphinx docs to `build/docs/dist/html`
+This builds Doxygen docs to `build/docs/dist/html`
 
 ```bash
 mkdir build && cd build
