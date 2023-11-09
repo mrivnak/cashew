@@ -201,6 +201,12 @@ TEST_CASE("tokenize (int_literal_3.nut)", "[token]")
                                    {TokenType::TOKEN_ASSIGNMENT},
                                    {TokenType::TOKEN_INTEGER_LITERAL, "5_u64"},
                                    {TokenType::TOKEN_NEWLINE},
+                                   // let e = 5_usize
+                                   {TokenType::TOKEN_LET},
+                                   {TokenType::TOKEN_IDENTIFIER, "e"},
+                                   {TokenType::TOKEN_ASSIGNMENT},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "5_usize"},
+                                   {TokenType::TOKEN_NEWLINE},
                                    {TokenType::TOKEN_END_OF_FILE}};
     auto tokens = tokenize(input);
 
@@ -216,29 +222,35 @@ TEST_CASE("tokenize (int_literal_4.nut)", "[token]")
 {
     auto input = readFileToStream("../tests/examples/parser/int_literal_4.nut");
 
-    std::vector<Token> expected = {// let a = 5_u8
+    std::vector<Token> expected = {// let a = 5_i8
                                    {TokenType::TOKEN_LET},
                                    {TokenType::TOKEN_IDENTIFIER, "a"},
                                    {TokenType::TOKEN_ASSIGNMENT},
                                    {TokenType::TOKEN_INTEGER_LITERAL, "5_i8"},
                                    {TokenType::TOKEN_NEWLINE},
-                                   // let b = 5_u16
+                                   // let b = 5_i16
                                    {TokenType::TOKEN_LET},
                                    {TokenType::TOKEN_IDENTIFIER, "b"},
                                    {TokenType::TOKEN_ASSIGNMENT},
                                    {TokenType::TOKEN_INTEGER_LITERAL, "5_i16"},
                                    {TokenType::TOKEN_NEWLINE},
-                                   // let c = 5_u32
+                                   // let c = 5_i32
                                    {TokenType::TOKEN_LET},
                                    {TokenType::TOKEN_IDENTIFIER, "c"},
                                    {TokenType::TOKEN_ASSIGNMENT},
                                    {TokenType::TOKEN_INTEGER_LITERAL, "5_i32"},
                                    {TokenType::TOKEN_NEWLINE},
-                                   // let d = 5_u64
+                                   // let d = 5_i64
                                    {TokenType::TOKEN_LET},
                                    {TokenType::TOKEN_IDENTIFIER, "d"},
                                    {TokenType::TOKEN_ASSIGNMENT},
                                    {TokenType::TOKEN_INTEGER_LITERAL, "5_i64"},
+                                   {TokenType::TOKEN_NEWLINE},
+                                   // let e = 5_isize
+                                   {TokenType::TOKEN_LET},
+                                   {TokenType::TOKEN_IDENTIFIER, "e"},
+                                   {TokenType::TOKEN_ASSIGNMENT},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "5_isize"},
                                    {TokenType::TOKEN_NEWLINE},
                                    {TokenType::TOKEN_END_OF_FILE}};
     auto tokens = tokenize(input);

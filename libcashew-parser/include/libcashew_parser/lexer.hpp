@@ -103,7 +103,7 @@ struct Token
 
 /*!
  * @fn std::vector<Token> tokenize(std::istream &input)
- * @brief Tokenize a string
+ * @brief Split an input stream into tokens
  * @param input Input stream
  * @return Vector of tokens
  */
