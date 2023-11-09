@@ -480,3 +480,23 @@ TEST_CASE("tokenize (arithmetic_3.nut)", "[token]")
         REQUIRE(tokens[i].value == expected[i].value);
     }
 }
+
+TEST_CASE("tokenize (no_trailing_newline.nut)", "[token]")
+{
+    auto input = readFileToStream("../tests/examples/parser/no_trailing_newline.nut");
+
+    std::vector<Token> expected = {// let a = 5
+                                   {TokenType::TOKEN_LET},
+                                   {TokenType::TOKEN_IDENTIFIER, "a"},
+                                   {TokenType::TOKEN_ASSIGNMENT},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "5"},
+                                   {TokenType::TOKEN_END_OF_FILE}};
+    auto tokens = tokenize(input);
+
+    REQUIRE(tokens.size() == expected.size());
+    for (size_t i = 0; i < tokens.size(); ++i)
+    {
+        REQUIRE(tokens[i].type == expected[i].type);
+        REQUIRE(tokens[i].value == expected[i].value);
+    }
+}
