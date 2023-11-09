@@ -92,12 +92,19 @@ enum TokenType
 /*!
  * @struct Token
  * @brief Token structure
- * @var Token::type The type of token
- * @var Token::value The value of the token, if applicable
  */
 struct Token
 {
+    /*!
+     * @var Token::type
+     * @brief The type of token
+     */
     TokenType type;
+
+    /*!
+     * @var Token::value
+     * @brief The value of the token, if applicable
+     */
     std::string value;
 };
 

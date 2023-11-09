@@ -1,3 +1,4 @@
+#include <format>
 #include <regex>
 #include <sstream>
 
@@ -48,6 +49,14 @@ Token resolveToken(std::string token)
     {
         return Token{TokenType::TOKEN_MOD};
     }
+    else if (token == "(")
+    {
+        return Token{TokenType::TOKEN_LEFT_PAREN};
+    }
+    else if (token == ")")
+    {
+        return Token{TokenType::TOKEN_RIGHT_PAREN};
+    }
     else
     {
         if (isdigit(token.front()))
@@ -65,7 +74,7 @@ Token resolveToken(std::string token)
 
         if (!std::regex_match(token, IDENTIFIER_REGEX))
         {
-            throw InvalidTokenException("Invalid identifier");
+            throw InvalidTokenException(std::format("Invalid identifier : {}", token));
         }
         return Token{TokenType::TOKEN_IDENTIFIER, token};
     }
@@ -80,6 +89,7 @@ std::vector<Token> tokenize(std::istream &input)
 
     char character;
     char prevCharacter = '\0';
+    char isMath = false;
     while (input.get(character))
     {
         if (inComment)
@@ -132,7 +142,21 @@ std::vector<Token> tokenize(std::istream &input)
         case '/':
             if (prevCharacter == '/')
             {
+                token.str("");
                 inComment = true;
+            }
+            else
+            {
+                // add the previous token
+                if (!token.str().empty())
+                {
+                    tokens.push_back(resolveToken(token.str()));
+                    token.str("");
+                }
+
+                // add the token, mark as math for handling unary operators
+                token << character;
+                isMath = true;
             }
             break;
         case ' ':
@@ -150,7 +174,37 @@ std::vector<Token> tokenize(std::istream &input)
                 }
             }
             break;
+        case '+':
+        case '-':
+        case '*':
+        case '%':
+            if (!token.str().empty())
+            {
+                tokens.push_back(resolveToken(token.str()));
+                token.str("");
+            }
+            token << character;
+            isMath = true;
+            break;
+        case '(':
+        case ')':
+            if (!token.str().empty())
+            {
+                tokens.push_back(resolveToken(token.str()));
+                token.str("");
+            }
+            tokens.push_back(resolveToken(std::string(1, character)));
+            break;
         default:
+            if (isMath)
+            {
+                if (!token.str().empty())
+                {
+                    tokens.push_back(resolveToken(token.str()));
+                    token.str("");
+                }
+                isMath = false;
+            }
             token << character;
             break;
         }

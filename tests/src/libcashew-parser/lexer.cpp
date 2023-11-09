@@ -343,3 +343,140 @@ TEST_CASE("tokenize (float_literal_4.nut)", "[token]")
         REQUIRE(tokens[i].value == expected[i].value);
     }
 }
+
+TEST_CASE("tokenize (arithmetic_1.nut)", "[token]")
+{
+    auto input = readFileToStream("../tests/examples/parser/arithmetic_1.nut");
+
+    std::vector<Token> expected = {// let a = 5 + 2
+                                   {TokenType::TOKEN_LET},
+                                   {TokenType::TOKEN_IDENTIFIER, "a"},
+                                   {TokenType::TOKEN_ASSIGNMENT},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "5"},
+                                   {TokenType::TOKEN_PLUS},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "2"},
+                                   {TokenType::TOKEN_NEWLINE},
+                                   // let b = 5 - 2
+                                   {TokenType::TOKEN_LET},
+                                   {TokenType::TOKEN_IDENTIFIER, "b"},
+                                   {TokenType::TOKEN_ASSIGNMENT},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "5"},
+                                   {TokenType::TOKEN_MINUS},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "2"},
+                                   {TokenType::TOKEN_NEWLINE},
+                                   // let c = 5 * 2
+                                   {TokenType::TOKEN_LET},
+                                   {TokenType::TOKEN_IDENTIFIER, "c"},
+                                   {TokenType::TOKEN_ASSIGNMENT},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "5"},
+                                   {TokenType::TOKEN_STAR},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "2"},
+                                   {TokenType::TOKEN_NEWLINE},
+                                   // let d = 5 / 2
+                                   {TokenType::TOKEN_LET},
+                                   {TokenType::TOKEN_IDENTIFIER, "d"},
+                                   {TokenType::TOKEN_ASSIGNMENT},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "5"},
+                                   {TokenType::TOKEN_SLASH},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "2"},
+                                   {TokenType::TOKEN_NEWLINE},
+                                   // let e = 5 % 2
+                                   {TokenType::TOKEN_LET},
+                                   {TokenType::TOKEN_IDENTIFIER, "e"},
+                                   {TokenType::TOKEN_ASSIGNMENT},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "5"},
+                                   {TokenType::TOKEN_MOD},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "2"},
+                                   {TokenType::TOKEN_NEWLINE},
+                                   {TokenType::TOKEN_END_OF_FILE}};
+    auto tokens = tokenize(input);
+
+    REQUIRE(tokens.size() == expected.size());
+    for (size_t i = 0; i < tokens.size(); ++i)
+    {
+        REQUIRE(tokens[i].type == expected[i].type);
+        REQUIRE(tokens[i].value == expected[i].value);
+    }
+}
+
+TEST_CASE("tokenize (arithmetic_2.nut)", "[token]")
+{
+    auto input = readFileToStream("../tests/examples/parser/arithmetic_2.nut");
+
+    std::vector<Token> expected = {// let a = 5 + 2
+                                   {TokenType::TOKEN_LET},
+                                   {TokenType::TOKEN_IDENTIFIER, "a"},
+                                   {TokenType::TOKEN_ASSIGNMENT},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "5"},
+                                   {TokenType::TOKEN_PLUS},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "2"},
+                                   {TokenType::TOKEN_NEWLINE},
+                                   // let b = 5 - 2
+                                   {TokenType::TOKEN_LET},
+                                   {TokenType::TOKEN_IDENTIFIER, "b"},
+                                   {TokenType::TOKEN_ASSIGNMENT},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "5"},
+                                   {TokenType::TOKEN_MINUS},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "2"},
+                                   {TokenType::TOKEN_NEWLINE},
+                                   // let c = 5 * 2
+                                   {TokenType::TOKEN_LET},
+                                   {TokenType::TOKEN_IDENTIFIER, "c"},
+                                   {TokenType::TOKEN_ASSIGNMENT},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "5"},
+                                   {TokenType::TOKEN_STAR},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "2"},
+                                   {TokenType::TOKEN_NEWLINE},
+                                   // let d = 5 / 2
+                                   {TokenType::TOKEN_LET},
+                                   {TokenType::TOKEN_IDENTIFIER, "d"},
+                                   {TokenType::TOKEN_ASSIGNMENT},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "5"},
+                                   {TokenType::TOKEN_SLASH},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "2"},
+                                   {TokenType::TOKEN_NEWLINE},
+                                   // let e = 5 % 2
+                                   {TokenType::TOKEN_LET},
+                                   {TokenType::TOKEN_IDENTIFIER, "e"},
+                                   {TokenType::TOKEN_ASSIGNMENT},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "5"},
+                                   {TokenType::TOKEN_MOD},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "2"},
+                                   {TokenType::TOKEN_NEWLINE},
+                                   {TokenType::TOKEN_END_OF_FILE}};
+    auto tokens = tokenize(input);
+
+    REQUIRE(tokens.size() == expected.size());
+    for (size_t i = 0; i < tokens.size(); ++i)
+    {
+        REQUIRE(tokens[i].type == expected[i].type);
+        REQUIRE(tokens[i].value == expected[i].value);
+    }
+}
+
+TEST_CASE("tokenize (arithmetic_3.nut)", "[token]")
+{
+    auto input = readFileToStream("../tests/examples/parser/arithmetic_3.nut");
+
+    std::vector<Token> expected = {// let a = (5 + 2) * 3
+                                   {TokenType::TOKEN_LET},
+                                   {TokenType::TOKEN_IDENTIFIER, "a"},
+                                   {TokenType::TOKEN_ASSIGNMENT},
+                                   {TokenType::TOKEN_LEFT_PAREN},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "5"},
+                                   {TokenType::TOKEN_PLUS},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "2"},
+                                   {TokenType::TOKEN_RIGHT_PAREN},
+                                   {TokenType::TOKEN_STAR},
+                                   {TokenType::TOKEN_INTEGER_LITERAL, "3"},
+                                   {TokenType::TOKEN_NEWLINE},
+                                   {TokenType::TOKEN_END_OF_FILE}};
+    auto tokens = tokenize(input);
+
+    REQUIRE(tokens.size() == expected.size());
+    for (size_t i = 0; i < tokens.size(); ++i)
+    {
+        REQUIRE(tokens[i].type == expected[i].type);
+        REQUIRE(tokens[i].value == expected[i].value);
+    }
+}
