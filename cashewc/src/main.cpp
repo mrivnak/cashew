@@ -22,7 +22,7 @@ int main(int argc, char **argv)
     options.positional_help("<FILES>");
     options.parse_positional({"files"});
 
-    auto result = options.parse(argc, argv);
+    const auto result = options.parse(argc, argv);
 
     if (result.count("help"))
     {
@@ -42,8 +42,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    auto files = result["files"].as<std::vector<std::string>>();
-    for (auto &file : files)
+    for (const auto files = result["files"].as<std::vector<std::string>>(); auto &file : files)
     {
         std::cout << "Compiling: " << file << std::endl;
     }
