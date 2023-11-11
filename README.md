@@ -9,6 +9,10 @@
 
 Functional, strongly-typed programming language, implemented with C++ and LLVM
 
+## Links
+
+- **[Documentation](https://mrivnak.github.io/cashew)**
+
 ## Development
 
 ### Prerequisites
