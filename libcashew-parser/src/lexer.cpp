@@ -6,8 +6,7 @@
 #include "libcashew_parser/lexer.hpp"
 
 const std::regex IDENTIFIER_REGEX = std::regex("^[a-zA-Z_][a-zA-Z0-9_]*$");
-const std::regex INTEGER_LITERAL_REGEX =
-    std::regex("^(?:[0-9]{1,2}|[0-9][0-9_]+[0-9])(?:_[ui](?:8|16|32|64|size))?$");
+const std::regex INTEGER_LITERAL_REGEX = std::regex("^(?:[0-9]{1,2}|[0-9][0-9_]+[0-9])(?:_[ui](?:8|16|32|64|size))?$");
 const std::regex FLOAT_LITERAL_REGEX =
     std::regex("^(?:[0-9]{1,2}|[0-9][0-9_]+[0-9])\\.(?:[0-9]{0,2}|[0-9][0-9_]+[0-9])(?:_f(?:32|64))?$");
 
@@ -17,69 +16,66 @@ Token resolveToken(std::string token)
 {
     if (token.starts_with("\"") && token.ends_with("\""))
     {
-        return Token{TokenType::TOKEN_STRING_LITERAL, token};
+        return Token{TOKEN_STRING_LITERAL, token};
     }
-    else if (token == "let")
+    if (token == "let")
     {
-        return Token{TokenType::TOKEN_LET};
+        return Token{TOKEN_LET};
     }
-    else if (token == "mut")
+    if (token == "mut")
     {
-        return Token{TokenType::TOKEN_MUT};
+        return Token{TOKEN_MUT};
     }
-    else if (token == "=")
+    if (token == "=")
     {
-        return Token{TokenType::TOKEN_ASSIGNMENT};
+        return Token{TOKEN_ASSIGNMENT};
     }
-    else if (token == "+")
+    if (token == "+")
     {
-        return Token{TokenType::TOKEN_PLUS};
+        return Token{TOKEN_PLUS};
     }
-    else if (token == "-")
+    if (token == "-")
     {
-        return Token{TokenType::TOKEN_MINUS};
+        return Token{TOKEN_MINUS};
     }
-    else if (token == "*")
+    if (token == "*")
     {
-        return Token{TokenType::TOKEN_STAR};
+        return Token{TOKEN_STAR};
     }
-    else if (token == "/")
+    if (token == "/")
     {
-        return Token{TokenType::TOKEN_SLASH};
+        return Token{TOKEN_SLASH};
     }
-    else if (token == "%")
+    if (token == "%")
     {
-        return Token{TokenType::TOKEN_MOD};
+        return Token{TOKEN_MOD};
     }
-    else if (token == "(")
+    if (token == "(")
     {
-        return Token{TokenType::TOKEN_LEFT_PAREN};
+        return Token{TOKEN_LEFT_PAREN};
     }
-    else if (token == ")")
+    if (token == ")")
     {
-        return Token{TokenType::TOKEN_RIGHT_PAREN};
+        return Token{TOKEN_RIGHT_PAREN};
     }
-    else
+    if (isdigit(token.front()) || token.front() == '-')
     {
-        if (isdigit(token.front()) || token.front() == '-')
+        if (std::regex_match(token, INTEGER_LITERAL_REGEX))
         {
-            if (std::regex_match(token, INTEGER_LITERAL_REGEX))
-            {
-                return Token{TokenType::TOKEN_INTEGER_LITERAL, token};
-            }
-            if (std::regex_match(token, FLOAT_LITERAL_REGEX))
-            {
-                return Token{TokenType::TOKEN_FLOAT_LITERAL, token};
-            }
-            throw InvalidTokenException("Invalid numeric literal");
+            return Token{TOKEN_INTEGER_LITERAL, token};
         }
+        if (std::regex_match(token, FLOAT_LITERAL_REGEX))
+        {
+            return Token{TOKEN_FLOAT_LITERAL, token};
+        }
+        throw InvalidTokenException("Invalid numeric literal");
+    }
 
-        if (!std::regex_match(token, IDENTIFIER_REGEX))
-        {
-            throw InvalidTokenException(std::format("Invalid identifier : {}", token));
-        }
-        return Token{TokenType::TOKEN_IDENTIFIER, token};
+    if (!std::regex_match(token, IDENTIFIER_REGEX))
+    {
+        throw InvalidTokenException(std::format("Invalid identifier : {}", token));
     }
+    return Token{TOKEN_IDENTIFIER, token};
 }
 std::vector<Token> tokenize(std::istream &input)
 {
@@ -100,7 +96,7 @@ std::vector<Token> tokenize(std::istream &input)
             if (character == '\n')
             {
                 inComment = false;
-                tokens.emplace_back(TokenType::TOKEN_NEWLINE);
+                tokens.emplace_back(TOKEN_NEWLINE);
             }
             continue; // ignore all other characters in comment
         }
@@ -120,7 +116,7 @@ std::vector<Token> tokenize(std::istream &input)
             }
 
             // also add a newline token
-            tokens.emplace_back(TokenType::TOKEN_NEWLINE);
+            tokens.emplace_back(TOKEN_NEWLINE);
 
             break;
         case '"':
@@ -221,7 +217,7 @@ std::vector<Token> tokenize(std::istream &input)
         token.str("");
     }
 
-    tokens.emplace_back(TokenType::TOKEN_END_OF_FILE);
+    tokens.emplace_back(TOKEN_END_OF_FILE);
 
     return tokens;
 }

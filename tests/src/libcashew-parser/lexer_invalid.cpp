@@ -25,9 +25,9 @@ TEST_CASE("tokenize_invalid (invalid_int_literal_2.nut)", "[token][invalid]")
     // This will tokenize since "_5" is a valid identifier, but it will fail in the parser
     auto input = readFileToStream("../tests/examples/parser/invalid/invalid_int_literal_2.nut");
     std::vector<Token> expected = {// let a = _5
-                                   {TokenType::TOKEN_LET},        {TokenType::TOKEN_IDENTIFIER, "a"},
-                                   {TokenType::TOKEN_ASSIGNMENT}, {TokenType::TOKEN_IDENTIFIER, "_5"},
-                                   {TokenType::TOKEN_NEWLINE},    {TokenType::TOKEN_END_OF_FILE}};
+                                   {TOKEN_LET},        {TOKEN_IDENTIFIER, "a"},
+                                   {TOKEN_ASSIGNMENT}, {TOKEN_IDENTIFIER, "_5"},
+                                   {TOKEN_NEWLINE},    {TOKEN_END_OF_FILE}};
     auto tokens = tokenize(input);
 
     REQUIRE(tokens.size() == expected.size());

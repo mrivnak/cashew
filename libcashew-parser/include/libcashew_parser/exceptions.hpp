@@ -11,9 +11,8 @@ namespace cashew::parser
  * @class InvalidTokenException
  * @brief An exception thrown when a token is invalid
  */
-class InvalidTokenException : public std::exception
+class InvalidTokenException final : public std::exception
 {
-  private:
     std::string message;
 
   public:
