@@ -32,11 +32,7 @@ FetchContent_Declare(
         DOWNLOAD_EXTRACT_TIMESTAMP TRUE
         URL https://github.com/catchorg/Catch2/archive/refs/tags/v3.4.0.tar.gz
 )
-
-if (NOT Catch2_POPULATED)
-    FetchContent_Populate(Catch2)
-    add_subdirectory(${catch2_SOURCE_DIR} ${catch2_BINARY_DIR})
-endif ()
+FetchContent_MakeAvailable(Catch2)
 
 add_executable(tests
         tests/src/util.cpp
