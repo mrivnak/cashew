@@ -1,11 +1,13 @@
 #include <format>
 #include <regex>
+#include <set>
 #include <sstream>
+#include <string>
 
 #include "libcashew_parser/exceptions.hpp"
 #include "libcashew_parser/lexer.hpp"
 
-const std::regex IDENTIFIER_REGEX = std::regex("^[a-zA-Z_][a-zA-Z0-9_]*$");
+const std::regex IDENTIFIER_REGEX = std::regex("^[a-zA-Z_][a-zA-Z0-9_<>]*$");
 const std::regex INTEGER_LITERAL_REGEX = std::regex("^(?:[0-9]{1,2}|[0-9][0-9_]+[0-9])(?:_[ui](?:8|16|32|64|size))?$");
 const std::regex FLOAT_LITERAL_REGEX =
     std::regex("^(?:[0-9]{1,2}|[0-9][0-9_]+[0-9])\\.(?:[0-9]{0,2}|[0-9][0-9_]+[0-9])(?:_f(?:32|64))?$");
@@ -58,7 +60,27 @@ Token resolveToken(std::string token)
     {
         return Token{TOKEN_RIGHT_PAREN};
     }
-    if (isdigit(token.front()) || token.front() == '-')
+    if (token == "+=")
+    {
+        return Token{TOKEN_PLUS_EQUAL};
+    }
+    if (token == "-=")
+    {
+        return Token{TOKEN_MINUS_EQUAL};
+    }
+    if (token == "*=")
+    {
+        return Token{TOKEN_STAR_EQUAL};
+    }
+    if (token == "/=")
+    {
+        return Token{TOKEN_SLASH_EQUAL};
+    }
+    if (token == "%=")
+    {
+        return Token{TOKEN_MOD_EQUAL};
+    }
+    if (isdigit(token.front()))
     {
         if (std::regex_match(token, INTEGER_LITERAL_REGEX))
         {
@@ -137,26 +159,7 @@ std::vector<Token> tokenize(std::istream &input)
             }
 
             break;
-        case '/':
-            if (prevCharacter == '/')
-            {
-                token.str("");
-                inComment = true;
-            }
-            else
-            {
-                // add the previous token
-                if (!token.str().empty())
-                {
-                    tokens.push_back(resolveToken(token.str()));
-                    token.str("");
-                }
 
-                // add the token, mark as math for handling unary operators
-                token << character;
-                isMath = true;
-            }
-            break;
         case ' ':
         case '\t':
             if (inString) // include whitespace in string literals
@@ -172,18 +175,20 @@ std::vector<Token> tokenize(std::istream &input)
                 }
             }
             break;
+        case '/':
+            if (prevCharacter == '/')
+            {
+                // Remove previous slash token
+                tokens.pop_back();
+
+                token.str("");
+                inComment = true;
+                break;
+            }
         case '+':
         case '-':
         case '*':
         case '%':
-            if (!token.str().empty())
-            {
-                tokens.push_back(resolveToken(token.str()));
-                token.str("");
-            }
-            token << character;
-            isMath = true;
-            break;
         case '(':
         case ')':
             if (!token.str().empty())
@@ -193,16 +198,42 @@ std::vector<Token> tokenize(std::istream &input)
             }
             tokens.push_back(resolveToken(std::string(1, character)));
             break;
-        default:
-            if (isMath)
+        case ':':
+            if (prevCharacter == ':')
             {
-                if (!token.str().empty())
-                {
-                    tokens.push_back(resolveToken(token.str()));
-                    token.str("");
-                }
-                isMath = false;
+                // Single colon has already been added, remove it
+                tokens.pop_back();
+
+                tokens.emplace_back(TOKEN_DOUBLE_COLON);
             }
+            else
+            {
+                // Add the previous token
+                tokens.push_back(resolveToken(token.str()));
+                token.str("");
+
+                // Add the colon token
+                tokens.emplace_back(TOKEN_COLON);
+            }
+            break;
+        case '=':
+            if (std::set{'+', '-', '*', '/', '%', '='}.contains(prevCharacter))
+            {
+                // Remove previous token
+                tokens.pop_back();
+
+                // Add new
+                tokens.push_back(resolveToken(std::string(1, prevCharacter) + character));
+                token.str(""); // TODO: maybe not needed
+            }
+            else
+            {
+                // Add the token
+                tokens.emplace_back(TOKEN_ASSIGNMENT);
+                token.str("");
+            }
+            break;
+        default:
             token << character;
             break;
         }

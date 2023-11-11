@@ -521,3 +521,61 @@ TEST_CASE("tokenize (no_trailing_newline.nut)", "[token]")
         REQUIRE(tokens[i].value == expected[i].value);
     }
 }
+
+TEST_CASE("tokenize (explicit_type.nut)", "[token]")
+{
+    auto input = readFileToStream("../tests/examples/parser/explicit_type.nut");
+
+    std::vector<Token> expected = {
+        // let a: i32 = 1
+        {TOKEN_LET},        {TOKEN_IDENTIFIER, "a"},      {TOKEN_COLON},   {TOKEN_IDENTIFIER, "i32"},
+        {TOKEN_ASSIGNMENT}, {TOKEN_INTEGER_LITERAL, "1"}, {TOKEN_NEWLINE}, {TOKEN_END_OF_FILE}};
+    auto tokens = tokenize(input);
+
+    REQUIRE(tokens.size() == expected.size());
+    for (size_t i = 0; i < tokens.size(); ++i)
+    {
+        REQUIRE(tokens[i].type == expected[i].type);
+        REQUIRE(tokens[i].value == expected[i].value);
+    }
+}
+
+TEST_CASE("tokenize (arithmetic_assignment_1.nut)", "[token]")
+{
+    auto input = readFileToStream("../tests/examples/parser/arithmetic_assignment_1.nut");
+
+    std::vector<Token> expected = {// a += 1
+                                   {TOKEN_IDENTIFIER, "a"},
+                                   {TOKEN_PLUS_EQUAL},
+                                   {TOKEN_INTEGER_LITERAL, "1"},
+                                   {TOKEN_NEWLINE},
+                                   // b -= 2
+                                   {TOKEN_IDENTIFIER, "b"},
+                                   {TOKEN_MINUS_EQUAL},
+                                   {TOKEN_INTEGER_LITERAL, "2"},
+                                   {TOKEN_NEWLINE},
+                                   // c *= 3
+                                   {TOKEN_IDENTIFIER, "c"},
+                                   {TOKEN_STAR_EQUAL},
+                                   {TOKEN_INTEGER_LITERAL, "3"},
+                                   {TOKEN_NEWLINE},
+                                   // d /= 4
+                                   {TOKEN_IDENTIFIER, "d"},
+                                   {TOKEN_SLASH_EQUAL},
+                                   {TOKEN_INTEGER_LITERAL, "4"},
+                                   {TOKEN_NEWLINE},
+                                   // e %= 5
+                                   {TOKEN_IDENTIFIER, "e"},
+                                   {TOKEN_MOD_EQUAL},
+                                   {TOKEN_INTEGER_LITERAL, "5"},
+                                   {TOKEN_NEWLINE},
+                                   {TOKEN_END_OF_FILE}};
+    auto tokens = tokenize(input);
+
+    REQUIRE(tokens.size() == expected.size());
+    for (size_t i = 0; i < tokens.size(); ++i)
+    {
+        REQUIRE(tokens[i].type == expected[i].type);
+        REQUIRE(tokens[i].value == expected[i].value);
+    }
+}

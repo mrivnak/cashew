@@ -27,11 +27,18 @@ enum TokenType
     TOKEN_RIGHT_BRACE,
 
     // Arithmetic operators
-    TOKEN_MINUS,
     TOKEN_PLUS,
+    TOKEN_MINUS,
     TOKEN_STAR,
     TOKEN_SLASH,
     TOKEN_MOD,
+
+    // Arithmetic assignment operators
+    TOKEN_PLUS_EQUAL,
+    TOKEN_MINUS_EQUAL,
+    TOKEN_STAR_EQUAL,
+    TOKEN_SLASH_EQUAL,
+    TOKEN_MOD_EQUAL,
 
     // Comparison operators
     TOKEN_NOT_EQUAL,
@@ -56,7 +63,6 @@ enum TokenType
     TOKEN_STRING_LITERAL,
     TOKEN_INTEGER_LITERAL,
     TOKEN_FLOAT_LITERAL,
-    TOKEN_TYPE_IDENTIFIER,
 
     // Keywords
     TOKEN_ELSE,
@@ -72,7 +78,8 @@ enum TokenType
     // Misc syntax
     TOKEN_COMMENT,
     TOKEN_COMMA,
-    TOKEN_COLON_COLON,
+    TOKEN_COLON,
+    TOKEN_DOUBLE_COLON,
     TOKEN_DOT,
 
     // Language features
