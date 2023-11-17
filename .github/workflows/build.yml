@@ -53,15 +53,16 @@ jobs:
         working-directory: build
         run: |
           llvm-profdata-17 merge -sparse default.profraw -o default.profdata   
-          llvm-cov-17 export ./libcashew/libcashew.a -instr-profile=default.profdata --format=lcov >> coverage.txt
-          llvm-cov-17 export ./libcashew-parser/libcashew-parser.a -instr-profile=default.profdata --format=lcov >> coverage.txt
+          llvm-cov-17 export ./cashewc/cashewc -instr-profile=default.profdata >> cashewc-coverage.json
+          llvm-cov-17 export ./libcashew/libcashew.a -instr-profile=default.profdata >> libcashew-coverage.json
+          llvm-cov-17 export ./libcashew-parser/libcashew-parser.a -instr-profile=default.profdata >> libcashew-parser-coverage.json
 
       - name: Upload code coverage report
         uses: actions/upload-artifact@v2
         if: success() || failure()
         with:
           name: coverage-report
-          path: build/coverage.txt
+          path: build/*-coverage.json
 
       - name: Upload test results
         uses: actions/upload-artifact@v3
@@ -104,5 +105,4 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          files: coverage.txt
           fail_ci_if_error: true
