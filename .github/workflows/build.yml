@@ -52,7 +52,7 @@ jobs:
       - name: Generate code coverage report
         working-directory: build
         run: |
-          llvm-cov-17 show ./foo -instr-profile=foo.profdata
+          llvm-profdata-17 merge -sparse default.profraw -o default.profdata   
           llvm-cov-17 export ./libcashew/libcashew.a -instr-profile=default.profdata --format=lcov >> coverage.info
           llvm-cov-17 export ./libcashew-parser/libcashew-parser.a -instr-profile=default.profdata --format=lcov >> coverage.info
 
