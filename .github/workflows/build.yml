@@ -38,7 +38,11 @@ jobs:
           CC: clang-17
           CXX: clang++-17
         run: |
-          cmake .. -G Ninja -DTARGETS_TO_BUILD="X86"
+          cmake \
+            -G Ninja \
+            -DTARGETS_TO_BUILD="X86" \
+            -DENABLE_COVERAGE=YES \
+            ..
           ninja
 
       - name: Run unit tests
