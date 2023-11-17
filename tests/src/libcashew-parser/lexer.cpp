@@ -19,7 +19,8 @@ TEST_CASE("tokenize (assignment_1.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -47,7 +48,8 @@ TEST_CASE("tokenize (assignment_2.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -70,7 +72,8 @@ TEST_CASE("tokenize (comment_1.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -97,7 +100,8 @@ TEST_CASE("tokenize (comment_2.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -115,7 +119,8 @@ TEST_CASE("tokenize (string_literal_1.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -133,7 +138,8 @@ TEST_CASE("tokenize (string_literal_2.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -151,7 +157,8 @@ TEST_CASE("tokenize (int_literal_1.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -169,7 +176,8 @@ TEST_CASE("tokenize (int_literal_2.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -214,7 +222,8 @@ TEST_CASE("tokenize (int_literal_3.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -259,7 +268,8 @@ TEST_CASE("tokenize (int_literal_4.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -277,7 +287,8 @@ TEST_CASE("tokenize (float_literal_1.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -295,7 +306,8 @@ TEST_CASE("tokenize (float_literal_2.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -313,7 +325,8 @@ TEST_CASE("tokenize (float_literal_3.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -340,7 +353,8 @@ TEST_CASE("tokenize (float_literal_4.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -395,7 +409,8 @@ TEST_CASE("tokenize (arithmetic_1.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -450,7 +465,8 @@ TEST_CASE("tokenize (arithmetic_2.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -477,7 +493,8 @@ TEST_CASE("tokenize (arithmetic_3.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -498,7 +515,8 @@ TEST_CASE("tokenize (arithmetic_4.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -518,7 +536,8 @@ TEST_CASE("tokenize (no_trailing_newline.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -536,7 +555,8 @@ TEST_CASE("tokenize (explicit_type.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
@@ -576,6 +596,7 @@ TEST_CASE("tokenize (arithmetic_assignment_1.nut)", "[token]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }

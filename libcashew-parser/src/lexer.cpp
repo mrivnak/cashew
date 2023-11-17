@@ -22,63 +22,63 @@ Token resolveToken(std::string token)
     }
     if (token == "let")
     {
-        return Token{TOKEN_LET};
+        return Token{TOKEN_LET, token};
     }
     if (token == "mut")
     {
-        return Token{TOKEN_MUT};
+        return Token{TOKEN_MUT, token};
     }
     if (token == "=")
     {
-        return Token{TOKEN_ASSIGNMENT};
+        return Token{TOKEN_ASSIGNMENT, token};
     }
     if (token == "+")
     {
-        return Token{TOKEN_PLUS};
+        return Token{TOKEN_PLUS, token};
     }
     if (token == "-")
     {
-        return Token{TOKEN_MINUS};
+        return Token{TOKEN_MINUS, token};
     }
     if (token == "*")
     {
-        return Token{TOKEN_STAR};
+        return Token{TOKEN_STAR, token};
     }
     if (token == "/")
     {
-        return Token{TOKEN_SLASH};
+        return Token{TOKEN_SLASH, token};
     }
     if (token == "%")
     {
-        return Token{TOKEN_MOD};
+        return Token{TOKEN_MOD, token};
     }
     if (token == "(")
     {
-        return Token{TOKEN_LEFT_PAREN};
+        return Token{TOKEN_LEFT_PAREN, token};
     }
     if (token == ")")
     {
-        return Token{TOKEN_RIGHT_PAREN};
+        return Token{TOKEN_RIGHT_PAREN, token};
     }
     if (token == "+=")
     {
-        return Token{TOKEN_PLUS_EQUAL};
+        return Token{TOKEN_PLUS_EQUAL, token};
     }
     if (token == "-=")
     {
-        return Token{TOKEN_MINUS_EQUAL};
+        return Token{TOKEN_MINUS_EQUAL, token};
     }
     if (token == "*=")
     {
-        return Token{TOKEN_STAR_EQUAL};
+        return Token{TOKEN_STAR_EQUAL, token};
     }
     if (token == "/=")
     {
-        return Token{TOKEN_SLASH_EQUAL};
+        return Token{TOKEN_SLASH_EQUAL, token};
     }
     if (token == "%=")
     {
-        return Token{TOKEN_MOD_EQUAL};
+        return Token{TOKEN_MOD_EQUAL, token};
     }
     if (isdigit(token.front()))
     {
@@ -99,6 +99,7 @@ Token resolveToken(std::string token)
     }
     return Token{TOKEN_IDENTIFIER, token};
 }
+
 std::vector<Token> tokenize(std::istream &input)
 {
     std::vector<Token> tokens;
@@ -109,7 +110,6 @@ std::vector<Token> tokenize(std::istream &input)
 
     char character;
     char prevCharacter = '\0';
-    char isMath = false;
     while (input.get(character))
     {
         if (inComment)
@@ -161,6 +161,7 @@ std::vector<Token> tokenize(std::istream &input)
             break;
 
         case ' ':
+            [[fallthrough]];
         case '\t':
             if (inString) // include whitespace in string literals
             {
@@ -185,11 +186,17 @@ std::vector<Token> tokenize(std::istream &input)
                 inComment = true;
                 break;
             }
+            [[fallthrough]];
         case '+':
+            [[fallthrough]];
         case '-':
+            [[fallthrough]];
         case '*':
+            [[fallthrough]];
         case '%':
+            [[fallthrough]];
         case '(':
+            [[fallthrough]];
         case ')':
             if (!token.str().empty())
             {

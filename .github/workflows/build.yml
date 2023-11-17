@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y clang-17 libboost-all-dev libssl-dev libzmq3-dev
+          sudo apt install -y clang-17 libboost-all-dev libssl-dev libzmq3-dev lcov
 
       - name: Create build directory
         run: mkdir build
@@ -44,6 +44,20 @@ jobs:
       - name: Run unit tests
         working-directory: build
         run: ./tests --reporter JUnit --out ../test-results.xml
+
+      - name: Generate code coverage report
+        working-directory: build
+        run: |
+          llvm-cov show ./foo -instr-profile=foo.profdata
+          llvm-cov export ./libcashew/libcashew.a -instr-profile=default.profdata --format=lcov >> coverage.info
+          llvm-cov export ./libcashew-parser/libcashew-parser.a -instr-profile=default.profdata --format=lcov >> coverage.info
+
+      - name: Upload code coverage report
+        uses: actions/upload-artifact@v2
+        if: success() || failure()
+        with:
+          name: coverage-report
+          path: build/coverage.info
 
       - name: Upload test results
         uses: actions/upload-artifact@v3
@@ -70,3 +84,19 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           files: test-results.xml
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download code coverage report
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage-report
+
+      - name: Publish Code Coverage
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          file: coverage.info

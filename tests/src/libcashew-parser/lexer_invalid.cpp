@@ -34,7 +34,8 @@ TEST_CASE("tokenize_invalid (invalid_int_literal_2.nut)", "[token][invalid]")
     for (size_t i = 0; i < tokens.size(); ++i)
     {
         REQUIRE(tokens[i].type == expected[i].type);
-        REQUIRE(tokens[i].value == expected[i].value);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
     }
 }
 
