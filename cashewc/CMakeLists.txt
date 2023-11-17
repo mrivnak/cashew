@@ -11,9 +11,6 @@ add_executable(cashewc
         # List all your source files here
 )
 
-target_compile_options(cashewc PRIVATE ${COVERAGE_COMPILE_FLAGS})
-target_link_directories(cashewc PRIVATE ${COVERAGE_LINK_FLAGS})
-
 target_include_directories(cashewc PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include
 )

@@ -40,9 +40,6 @@ add_library(cashew STATIC
         src/cashew.cpp
 )
 
-target_compile_options(cashew PRIVATE ${COVERAGE_COMPILE_FLAGS})
-target_link_options(cashew PRIVATE ${COVERAGE_LINK_FLAGS})
-
 target_include_directories(cashew PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
