@@ -17,6 +17,7 @@ find_program(LLD lld)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND LLD)
     message(STATUS "Using LLVM's lld linker")
     add_link_options("-fuse-ld=lld")
+    set(USE_LLD TRUE)
 endif ()
 
 # Set warning flags
