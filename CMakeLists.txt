@@ -13,10 +13,33 @@ endif ()
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Use LLVM's lld linker
-add_link_options("-fuse-ld=lld")
+find_program(LLD lld)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND LLD)
+    message(STATUS "Using LLVM's lld linker")
+    add_link_options("-fuse-ld=lld")
+endif ()
 
-# Enable warnings
-add_compile_options("-Wall" "-Wextra" "-Wpedantic" "-Wimplicit-fallthrough")
+# Set warning flags
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    message(STATUS "Enabling Clang warnings")
+    set(WARNING_FLAGS -Wall -Wextra -Wpedantic -Wshadow -Wdouble-promotion -Wimplicit-fallthrough)
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    message(STATUS "Enabling GCC warnings")
+    set(WARNING_FLAGS -Wall -Wextra -Wpedantic -Wshadow -Wdouble-promotion -Wimplicit-fallthrough)
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    message(STATUS "Enabling MSVC warnings")
+    set(WARNING_FLAGS /W4)
+endif ()
+
+# Enable warnings in debug mode
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(CUSTOM_COMPILE_FLAGS ${CUSTOM_COMPILE_FLAGS} ${WARNING_FLAGS})
+endif ()
+
+# Enable clang warnings for documentation
+if (BUILD_DOCS AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    set(CUSTOM_COMPILE_FLAGS ${CUSTOM_COMPILE_FLAGS} -Wdocumentation)
+endif ()
 
 # Add subdirectories
 add_subdirectory(libcashew-parser)
@@ -45,13 +68,17 @@ add_executable(tests
         tests/src/libcashew-parser/lexer_invalid.cpp
 )
 
+target_compile_options(tests PRIVATE ${CUSTOM_COMPILE_FLAGS})
+
 target_include_directories(tests PUBLIC
         tests/include
 )
 
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain cashew cashew-parser)
 
-target_compile_options(tests PRIVATE "-Wno-missing-field-initializers")
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(tests PRIVATE -Wno-missing-field-initializers)
+endif ()
 
 include(CTest)
 include(Catch)

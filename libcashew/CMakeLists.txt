@@ -36,24 +36,26 @@ include_directories(
 )
 add_definitions(${LLVM_DEFINITIONS})
 
-add_library(cashew STATIC
-        src/cashew.cpp
-)
-
-target_include_directories(cashew PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-
 llvm_map_components_to_libnames(LLVM_LIBS support core irreader)
 
 # Ignore warnings for LLVM
-foreach (LLVM_LIB IN ITEMS ${LLVM_LIBS})
-    target_compile_options(${LLVM_LIB} PUBLIC -Wno-everything)
-endforeach ()
-
-# Enable clang warnings for documentation
-if (BUILD_DOCS AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_compile_options(cashew PRIVATE -Wdocumentation)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    set(SUPPRESS_WARNINGS_FLAGS -Wno-everything)
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    set(SUPPRESS_WARNINGS_FLAGS -w)
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    set(SUPPRESS_WARNINGS_FLAGS /w)
 endif ()
 
+foreach (LLVM_LIB IN ITEMS ${LLVM_LIBS})
+    target_compile_options(${LLVM_LIB} PUBLIC ${SUPPRESS_WARNINGS_FLAGS})
+endforeach ()
+
+add_library(cashew STATIC
+        src/cashew.cpp
+)
+target_compile_options(cashew PRIVATE ${CUSTOM_COMPILE_FLAGS})
+target_include_directories(cashew PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
 target_link_libraries(cashew ${LLVM_LIBS})

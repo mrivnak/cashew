@@ -10,6 +10,7 @@ add_executable(cashewc
         src/main.cpp
         # List all your source files here
 )
+target_compile_options(cashewc PRIVATE ${CUSTOM_COMPILE_FLAGS})
 
 target_include_directories(cashewc PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include
