@@ -72,6 +72,8 @@ enum TokenType
     TOKEN_LET,
     TOKEN_MATCH,
     TOKEN_MUT,
+    TOKEN_RETURN,
+    TOKEN_THEN,
     TOKEN_TRUE,
     TOKEN_WHILE,
 

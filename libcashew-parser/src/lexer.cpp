@@ -28,6 +28,26 @@ Token resolveToken(std::string token)
     {
         return Token{TOKEN_MUT, token};
     }
+    if (token == "if")
+    {
+        return Token{TOKEN_IF, token};
+    }
+    if (token == "then")
+    {
+        return Token{TOKEN_THEN, token};
+    }
+    if (token == "else")
+    {
+        return Token{TOKEN_ELSE, token};
+    }
+    if (token == "true")
+    {
+        return Token{TOKEN_TRUE, token};
+    }
+    if (token == "false")
+    {
+        return Token{TOKEN_FALSE, token};
+    }
     if (token == "=")
     {
         return Token{TOKEN_ASSIGNMENT, token};
@@ -79,6 +99,34 @@ Token resolveToken(std::string token)
     if (token == "%=")
     {
         return Token{TOKEN_MOD_EQUAL, token};
+    }
+    if (token == "==")
+    {
+        return Token{TOKEN_EQUAL_EQUAL, token};
+    }
+    if (token == "!=")
+    {
+        return Token{TOKEN_NOT_EQUAL, token};
+    }
+    if (token == ">")
+    {
+        return Token{TOKEN_GREATER, token};
+    }
+    if (token == ">=")
+    {
+        return Token{TOKEN_GREATER_EQUAL, token};
+    }
+    if (token == "<")
+    {
+        return Token{TOKEN_LESS, token};
+    }
+    if (token == "<=")
+    {
+        return Token{TOKEN_LESS_EQUAL, token};
+    }
+    if (token == "!")
+    {
+        return Token{TOKEN_NOT, token};
     }
     if (isdigit(token.front()))
     {

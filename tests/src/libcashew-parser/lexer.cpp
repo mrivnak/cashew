@@ -600,3 +600,25 @@ TEST_CASE("tokenize (arithmetic_assignment_1.nut)", "[token]")
             REQUIRE(tokens[i].value == expected[i].value);
     }
 }
+
+TEST_CASE("tokenize (if_else_1.nut)", "[token]")
+{
+    auto input = readFileToStream("../tests/examples/parser/if_else_1.nut");
+
+    std::vector<Token> expected = {// if x > 2 then true else false
+                                   {TOKEN_IF},      {TOKEN_IDENTIFIER, "x"},
+                                   {TOKEN_GREATER}, {TOKEN_INTEGER_LITERAL, "2"},
+                                   {TOKEN_THEN},    {TOKEN_TRUE},
+                                   {TOKEN_ELSE},    {TOKEN_FALSE},
+                                   {TOKEN_NEWLINE}, {TOKEN_END_OF_FILE}};
+
+    auto tokens = tokenize(input);
+
+    REQUIRE(tokens.size() == expected.size());
+    for (size_t i = 0; i < tokens.size(); ++i)
+    {
+        REQUIRE(tokens[i].type == expected[i].type);
+        if (!expected[i].value.empty())
+            REQUIRE(tokens[i].value == expected[i].value);
+    }
+}
