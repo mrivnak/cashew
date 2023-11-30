@@ -7,7 +7,7 @@ set(FETCHCONTENT_QUIET FALSE)
 FetchContent_Declare(
         llvm
         DOWNLOAD_EXTRACT_TIMESTAMP TRUE
-        URL https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-17.0.3.tar.gz
+        URL https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-17.0.6.tar.gz
 )
 FetchContent_GetProperties(llvm)
 
